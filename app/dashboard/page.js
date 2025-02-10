@@ -7,7 +7,7 @@ import "./dashboard.css";
 export default function Dashboard() {
   const router = useRouter();
 
-  // ✅ Fetch user session with TanStack Query
+
   const { data: user, isLoading, isError } = useQuery({
     queryKey: ["session"],
     queryFn: async () => {
@@ -15,10 +15,10 @@ export default function Dashboard() {
       if (!res.ok) throw new Error("Not authenticated");
       return res.json().then((data) => data.user);
     },
-    retry: false, // ❌ No retries if session check fails
+    retry: false,
   });
 
-  // ✅ Logout Mutation
+
   const logoutMutation = useMutation({
     mutationFn: async () => {
       await fetch("/api/logout", { method: "POST" });
@@ -26,7 +26,7 @@ export default function Dashboard() {
     },
   });
 
-  // ✅ If session check fails, logout user automatically
+
   if (isError) {
     logoutMutation.mutate();
   }

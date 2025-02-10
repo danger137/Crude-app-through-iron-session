@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 export default function Login() {
   const router = useRouter();
 
-  // ✅ Login mutation with TanStack Query
+
   const loginMutation = useMutation({
     mutationFn: async (formData) => {
       const res = await fetch("/api/login", {
@@ -30,7 +30,7 @@ export default function Login() {
     },
   });
 
-  // ✅ Handle form submission
+ 
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = Object.fromEntries(new FormData(e.target));

@@ -27,14 +27,14 @@ export async function POST(req) {
     });
 
     const session = await getIronSession(req, res, {
-      password: process.env.SESSION_SECRET, // ✅ Secure and long password
+      password: process.env.SESSION_SECRET,
       cookieName: "session",
       cookieOptions: {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "Strict",
         path: "/",
-        maxAge: 3600, // 1 hour
+        maxAge: 3600, 
       },
     });
 

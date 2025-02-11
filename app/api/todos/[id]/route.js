@@ -1,19 +1,14 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/app/lib/prisma"; 
-import { cookies } from "next/headers"; 
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export async function PUT(req, { params }) {
   try {
    
-    const cookieStore = cookies();
-    const token = cookieStore.get("session"); 
+   
 
-    if (!token) {
-      return NextResponse.json(
-        { status: "error", message: "Unauthorized access" },
-        { status: 401 }
-      );
-    }
+
 
    
     const { id } = params;
@@ -54,18 +49,7 @@ export async function PUT(req, { params }) {
 export async function DELETE(req, { params }) {
   try {
 
-    const cookieStore = cookies();
-    const token = cookieStore.get("session"); 
-
-    if (!token) {
-      return NextResponse.json(
-        { status: "error", message: "Unauthorized access" },
-        { status: 401 }
-      );
-    }
-
-
-    const { id } = params;
+    const id = await params.id;
 
     if (!id) {
       return NextResponse.json(
@@ -74,7 +58,6 @@ export async function DELETE(req, { params }) {
       );
     }
 
-  
     await prisma.todo.delete({
       where: { id },
     });
@@ -88,3 +71,4 @@ export async function DELETE(req, { params }) {
     );
   }
 }
+
